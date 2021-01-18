@@ -44,16 +44,17 @@ def create_item(
 
 @router.get("/search", response_model=List[schemas.Line])
 def search_items(
-        db: Session = Depends(deps.get_db),
-        search_string: str = "",
-        skip: int = 0,
-        limit: int = 100,
-        current_user: models.User = Depends(deps.get_current_active_user),
+    db: Session = Depends(deps.get_db),
+    search_string: str = "",
+    skip: int = 0,
+    limit: int = 100,
+    current_user: models.User = Depends(deps.get_current_active_user),
 ) -> Any:
     """
     Retrieve items.
     """
-    return crud.line.filter_like_by_field(db, search_str=f"%{search_string}%", field_name="description", skip=skip, limit=limit)
+    return crud.line.filter_like_by_field(db, search_str=f"%{search_string}%", field_name="description", skip=skip,
+                                          limit=limit)
 
 
 @router.put("/{id}", response_model=schemas.Line)

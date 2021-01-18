@@ -4,7 +4,6 @@ from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 
 from app.db.base_class import Base
-
 from .mixins import AuditMixin
 
 if TYPE_CHECKING:
@@ -17,9 +16,9 @@ class Item(Base, AuditMixin):
     description = Column(String, index=True)
     owner_id = Column(Integer, ForeignKey("user.id"))
     owner = relationship("User", back_populates="items")
-
+    
     line_items = relationship("LineItem", backref="item")
-
+    
     lines = relationship(
         "Line",
         secondary="lineitem",

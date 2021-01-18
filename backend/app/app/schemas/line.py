@@ -24,7 +24,7 @@ class LineInDBBase(LineBase):
     id: int
     title: str
     owner_id: int
-    # items: Any
+    items: Optional[list]
 
     class Config:
         orm_mode = True
@@ -32,11 +32,8 @@ class LineInDBBase(LineBase):
 
 # Properties to return to client
 class Line(LineInDBBase):
-    items: Optional[list]
-    # pass
-
+    pass
 
 # Properties properties stored in DB
 class LineInDB(LineInDBBase):
-    items: list
     pass

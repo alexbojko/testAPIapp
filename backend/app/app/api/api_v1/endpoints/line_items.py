@@ -12,11 +12,11 @@ router = APIRouter()
 
 @router.post("/", response_model=schemas.LineItem)
 def create_line_item(
-        line_id: int,
-        *,
-        db: Session = Depends(deps.get_db),
-        line_item_in: schemas.LineItemCreate,
-        current_user: models.User = Depends(deps.get_current_active_user),
+    line_id: int,
+    *,
+    db: Session = Depends(deps.get_db),
+    line_item_in: schemas.LineItemCreate,
+    current_user: models.User = Depends(deps.get_current_active_user),
 ) -> Any:
     """
     Create new item.
@@ -26,7 +26,7 @@ def create_line_item(
         raise HTTPException(status_code=404, detail="Line not found")
     if not crud.user.is_superuser(current_user) and (line.owner_id != current_user.id):
         raise HTTPException(status_code=400, detail="Not enough permissions")
-
+    
     item = crud.item.get(db=db, id=line_item_in.item_id)
     if not item:
         raise HTTPException(status_code=404, detail="Item not found")
@@ -40,11 +40,11 @@ def create_line_item(
 
 @router.get("/", response_model=List[schemas.LineItem])
 def read_line_items(
-        line_id: int, *,
-        db: Session = Depends(deps.get_db),
-        skip: int = 0,
-        limit: int = 100,
-        current_user: models.User = Depends(deps.get_current_active_user),
+    line_id: int, *,
+    db: Session = Depends(deps.get_db),
+    skip: int = 0,
+    limit: int = 100,
+    current_user: models.User = Depends(deps.get_current_active_user),
 ) -> Any:
     """
     Retrieve items.
@@ -55,8 +55,9 @@ def read_line_items(
         raise HTTPException(status_code=404, detail="Line not found")
     if not crud.user.is_superuser(current_user) and (line.owner_id != current_user.id):
         raise HTTPException(status_code=400, detail="Not enough permissions")
-
-    return crud.line_item.get_multi_for_line_by_owner(db, line_id=line_id, limit=limit, skip=skip, owner_id=current_user.id)
+    
+    return crud.line_item.get_multi_for_line_by_owner(db, line_id=line_id, limit=limit, skip=skip,
+                                                      owner_id=current_user.id)
 
 
 @router.delete("/{id}", response_model=schemas.Line)

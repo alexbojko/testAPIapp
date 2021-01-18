@@ -4,8 +4,6 @@ from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 
 from app.db.base_class import Base
-
-# from .line_item import line_item
 from .mixins import AuditMixin
 
 if TYPE_CHECKING:

@@ -5,7 +5,6 @@ from sqlalchemy.orm import Session
 
 from app import crud, models, schemas
 from app.api import deps
-from app.models import Item
 
 router = APIRouter()
 
@@ -45,12 +44,12 @@ def create_item(
 
 @router.get("/search", response_model=List[schemas.Item])
 def search_items(
-        *,
-        db: Session = Depends(deps.get_db),
-        search_string: str = "",
-        skip: int = 0,
-        limit: int = 100,
-        current_user: models.User = Depends(deps.get_current_active_user),
+    *,
+    db: Session = Depends(deps.get_db),
+    search_string: str = "",
+    skip: int = 0,
+    limit: int = 100,
+    current_user: models.User = Depends(deps.get_current_active_user),
 ) -> Any:
     """
     Retrieve items.

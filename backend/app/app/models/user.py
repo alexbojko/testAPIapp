@@ -13,12 +13,12 @@ if TYPE_CHECKING:
 class User(Base, AuditMixin):
     id = Column(Integer, primary_key=True, index=True)
     full_name = Column(String, index=True)
-
+    
     email = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, nullable=False)
     is_active = Column(Boolean(), default=True)
     is_superuser = Column(Boolean(), default=False)
-
+    
     items = relationship("Item", back_populates="owner")
     lines = relationship("Line", back_populates="owner")
     line_items = relationship("LineItem")

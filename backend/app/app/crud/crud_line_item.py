@@ -18,20 +18,20 @@ class CRUDItem(CRUDBase[LineItem, LineItemCreate, LineItemUpdate]):
         db.commit()
         db.refresh(db_obj)
         return db_obj
-
+    
     def get_multi_by_owner(
         self, db: Session, *, owner_id: int, skip: int = 0, limit: int = 100
     ) -> List[LineItem]:
         return (
             db.query(self.model)
-            .filter(LineItem.owner_id == owner_id)
-            .offset(skip)
-            .limit(limit)
-            .all()
+                .filter(LineItem.owner_id == owner_id)
+                .offset(skip)
+                .limit(limit)
+                .all()
         )
-
+    
     def get_multi_for_line_by_owner(
-            self, db: Session, line_id: int, *, owner_id: int, skip: int = 0, limit: int = 100
+        self, db: Session, line_id: int, *, owner_id: int, skip: int = 0, limit: int = 100
     ) -> List[LineItem]:
         return (
             db.query(self.model)
