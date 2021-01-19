@@ -4,7 +4,7 @@ from app import crud, schemas
 from app.core.config import settings
 from app.db import base  # noqa: F401
 from app.models import Item, Line, LineItem
-
+from uuid import uuid4
 # make sure all SQL Alchemy models are imported (app.db.base) before initializing DB
 # otherwise, SQL Alchemy might fail to initialize relationships properly
 # for more details: https://github.com/tiangolo/full-stack-fastapi-postgresql/issues/28
@@ -47,15 +47,15 @@ def init_db(db: Session) -> None:
         print("\t FOR USER ", current_user.__dict__)
         for line_num in range(10):
             line: Line = Line(
-                title=f"Line_{line_num}",
-                description=f"Line description {line_num}",
+                title=f"Line_{uuid4()}",
+                description=f"Line description {uuid4()}",
                 owner_id=current_user.id
             )
             print("\t\t GENERATED LINE", line.__dict__)
             for item_num in range(100):
                 item = Item(
-                    title=f"Item_{item_num}",
-                    description=f"Item description {item_num}",
+                    title=f"Item_{uuid4()}",
+                    description=f"Item description {uuid4()}",
                     owner_id=current_user.id
                 )
                 line_item: LineItem = LineItem(
